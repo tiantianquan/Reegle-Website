@@ -8,7 +8,7 @@ var mongoose = require('mongoose')
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
-var news = require('./controllers/news')
+var ctrl = require('./controllers')
 
 var app = express();
 
@@ -35,9 +35,7 @@ app.use(require('node-sass-middleware')({
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', news);
-// app.use('/news/',news)
-app.use('/users', users);
+app.use('/',ctrl.main)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

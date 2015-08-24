@@ -1,8 +1,8 @@
 <div>
   <a ui-sref="news.create" class="btn btn-default" >+</a>
   <div class="list-group">
-    <a ui-sref="news.detail({id: news._id})" class="list-group-item" ng-repeat="news in data">
-    {{news.title}}
+    <a ui-sref="news.edit({id: news._id})" class="list-group-item" ng-repeat="news in newses">
+    <span>{{news.title}}</span> <span style="float:right">{{news.createDate}}</span>
   </a>
   </div>
 </div>

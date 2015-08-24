@@ -1,4 +1,4 @@
-angular.module('admin', ['ui.router', 'ui.bootstrap', 'ngFileUpload', 'textAngular', 'admin.controllers', 'admin.models'])
+angular.module('admin', ['ui.router', 'ngResource','ui.bootstrap', 'ngFileUpload', 'textAngular', 'admin.controllers', 'admin.models'])
 
 .config(function($stateProvider, $urlRouterProvider) {
 
@@ -29,12 +29,74 @@ angular.module('admin', ['ui.router', 'ui.bootstrap', 'ngFileUpload', 'textAngul
     }
   })
 
-  .state('news.detail', {
+  .state('news.edit', {
     url: '/:id',
     views: {
       'main@': {
         templateUrl: 'templates/news.detail.html',
-        controller: 'NewsDetailCtrl'
+        controller: 'NewsEditCtrl'
+      }
+    }
+  })
+
+
+   .state('serve', {
+    url: '/serve',
+    views: {
+      'main': {
+        templateUrl: 'templates/serve.html',
+        controller: 'ServeCtrl'
+      }
+    }
+  })
+
+  .state('serve.create', {
+    url: '/create',
+    views: {
+      'main@': {
+        templateUrl: 'templates/serve.detail.html',
+        controller: 'ServeCreateCtrl'
+      }
+    }
+  })
+
+  .state('serve.edit', {
+    url: '/:id',
+    views: {
+      'main@': {
+        templateUrl: 'templates/serve.detail.html',
+        controller: 'ServeEditCtrl'
+      }
+    }
+  })
+
+
+   .state('solution', {
+    url: '/solution',
+    views: {
+      'main': {
+        templateUrl: 'templates/solution.html',
+        controller: 'SolutionCtrl'
+      }
+    }
+  })
+
+  .state('solution.create', {
+    url: '/create',
+    views: {
+      'main@': {
+        templateUrl: 'templates/solution.detail.html',
+        controller: 'SolutionCreateCtrl'
+      }
+    }
+  })
+
+  .state('solution.edit', {
+    url: '/:id',
+    views: {
+      'main@': {
+        templateUrl: 'templates/solution.detail.html',
+        controller: 'SolutionEditCtrl'
       }
     }
   })
