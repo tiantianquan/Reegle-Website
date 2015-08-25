@@ -52,33 +52,34 @@ angular.module('admin.models', [])
 //   }
 // })
 
-.factory('News', function($resource) {
-  return $resource('/admin/news/:id', {
-    id: '@_id'
-  }, {
-    update: {
-      method: 'PUT'
-    }
-  })
+.factory('ModelUtil', function() {
+  return {
+    commonParam: {
+      {
+        id: '@_id'
+      }, {
+        update: {
+          method: 'PUT'
+        }
+      }
+    },
+    // successCallback: function(value, responseHeaders) {
+
+    // },
+    // failCallback: function(httpResponse) {
+    // }
+  }
 })
 
-.factory('Serve', function($resource) {
-  return $resource('/admin/serve/:id', {
-    id: '@_id'
-  }, {
-    update: {
-      method: 'PUT'
-    }
-  })
+.factory('News', function($resource, ModelUtil) {
+  var News = $resource('/admin/news/:id', ModelUtil.commonParam)
+  return News
 })
 
-.factory('Solution', function($resource) {
-  return $resource('/admin/solution/:id', {
-    id: '@_id'
-  }, {
-    update: {
-      method: 'PUT'
-    }
-  })
+.factory('Serve', function($resource, ModelUtil) {
+  return $resource('/admin/serve/:id', ModelUtil.commonParam)
 })
 
+.factory('Solution', function($resource, ModelUtil) {
+  return $resource('/admin/solution/:id', ModelUtil.commonParam)
+})

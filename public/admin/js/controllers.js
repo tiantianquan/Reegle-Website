@@ -34,8 +34,11 @@ angular.module('admin.controllers', [])
   }
 
   $scope.news = News.get({
-    id: $stateParams.id
-  })
+      id: $stateParams.id
+    }, function(value, responseHeaders) {
+      console.log(arguments)
+    },
+    function(httpResponse) {})
 
   $scope.submit = function() {
     $scope.news.$update(function() {
@@ -76,6 +79,21 @@ angular.module('admin.controllers', [])
       })
     })
   })
+
+  // $scope.checkChange = function(solution) {
+  //   var ca = $scope.serve.connectArticle
+  //   var filterList = ca.filter(function(_id) {
+  //     return _id === solution._id
+  //   })
+  //   if (filterList.length === 0 && solution.isChecked) {
+  //     ca.push(solution._id)
+  //   }
+  //   if (filterList.length !== 0 && !solution.isChecked) {
+  //     _.remove(ca, function(_id) {
+  //       return _id === solution._id
+  //     })
+  //   }
+  // }
 
   $scope.submit = function() {
     $scope.serve.connectArticle = []
