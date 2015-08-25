@@ -43,6 +43,7 @@ angular.module('admin.controllers', [])
     function(httpResponse) {})
 
   $scope.submit = function() {
+    console.log($scope.news)
     $scope.news.$update(function() {
       console.log($scope.news)
       $scope.alert = {
