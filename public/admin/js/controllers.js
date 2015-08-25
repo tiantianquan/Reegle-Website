@@ -7,6 +7,7 @@ angular.module('admin.controllers', [])
 })
 
 .controller('NewsEditCtrl', function($scope, $stateParams, News, Upload, $timeout) {
+  //upload
   $scope.uploadFiles = function(file) {
     $scope.f = file;
     if (file && !file.$error) {
@@ -33,19 +34,23 @@ angular.module('admin.controllers', [])
     }
   }
 
+  //crud
+
   $scope.news = News.get({
       id: $stateParams.id
-    }, function(value, responseHeaders) {
-      console.log(arguments)
+    }, function(value) {
     },
     function(httpResponse) {})
 
   $scope.submit = function() {
     $scope.news.$update(function() {
-      console.log('success')
-    }, function() {
-      console.log('fail')
-    })
+      console.log($scope.news)
+      $scope.alert = {
+        msg: '提交成功',
+        type: 'success',
+        isShow: true
+      }
+    }, function() {})
   }
 })
 

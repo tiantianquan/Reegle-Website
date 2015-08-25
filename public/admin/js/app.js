@@ -1,4 +1,4 @@
-angular.module('admin', ['ui.router', 'ngResource','ui.bootstrap', 'ngFileUpload', 'textAngular', 'admin.controllers', 'admin.models'])
+angular.module('admin', ['ui.router', 'ngResource', 'ui.bootstrap', 'ngFileUpload', 'textAngular', 'admin.controllers', 'admin.models'])
 
 .config(function($stateProvider, $urlRouterProvider) {
 
@@ -40,7 +40,7 @@ angular.module('admin', ['ui.router', 'ngResource','ui.bootstrap', 'ngFileUpload
   })
 
 
-   .state('serve', {
+  .state('serve', {
     url: '/serve',
     views: {
       'main': {
@@ -71,7 +71,7 @@ angular.module('admin', ['ui.router', 'ngResource','ui.bootstrap', 'ngFileUpload
   })
 
 
-   .state('solution', {
+  .state('solution', {
     url: '/solution',
     views: {
       'main': {
@@ -104,4 +104,34 @@ angular.module('admin', ['ui.router', 'ngResource','ui.bootstrap', 'ngFileUpload
 
 
   $urlRouterProvider.otherwise('/')
+})
+
+.directive('alertmsg', function() {
+  return {
+    restrict: 'E',
+    // transclude: true,
+    template: '<alert type="{{type}}" close="closeAlert()" ng-show="isShow">{{msg}}</alert>',
+    scope: {
+      msg: '=',
+      type: '=',
+      isShow:'='
+    },
+    link: function(scope, element, attrs) {
+      element.css({
+        position: 'fixed',
+        left: 0,
+        top: 0,
+        width: '100%',
+        'text-align': 'center',
+        opacity: '.7',
+        'z-index':100
+      })
+      scope.type = 'success'
+      scope.msg = 'success'
+      scope.isShow = false
+      scope.closeAlert = function() {
+        scope.isShow = false
+      }
+    },
+  }
 })

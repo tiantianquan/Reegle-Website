@@ -54,10 +54,11 @@ angular.module('admin.models', [])
 
 .factory('ModelUtil', function() {
   return {
-    commonParam: {
-      {
+    commonOpt: {
+      param: {
         id: '@_id'
-      }, {
+      },
+      method: {
         update: {
           method: 'PUT'
         }
@@ -72,14 +73,13 @@ angular.module('admin.models', [])
 })
 
 .factory('News', function($resource, ModelUtil) {
-  var News = $resource('/admin/news/:id', ModelUtil.commonParam)
-  return News
+  return $resource('/admin/news/:id', ModelUtil.commonOpt.param,ModelUtil.commonOpt.method)
 })
 
 .factory('Serve', function($resource, ModelUtil) {
-  return $resource('/admin/serve/:id', ModelUtil.commonParam)
+  return $resource('/admin/serve/:id', ModelUtil.commonOpt.param,ModelUtil.commonOpt.method)
 })
 
 .factory('Solution', function($resource, ModelUtil) {
-  return $resource('/admin/solution/:id', ModelUtil.commonParam)
+  return $resource('/admin/solution/:id', ModelUtil.commonOpt.param,ModelUtil.commonOpt.method)
 })
