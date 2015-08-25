@@ -110,7 +110,7 @@ angular.module('admin', ['ui.router', 'ngResource', 'ui.bootstrap', 'ngFileUploa
   return {
     restrict: 'E',
     // transclude: true,
-    template: '<alert type="{{type}}" close="closeAlert()" ng-show="isShow">{{msg}}</alert>',
+    template: '<alert type="{{type}}" dismiss-on-timeout="1" close="closeAlert()" ng-show="isShow">{{msg}}</alert>',
     scope: {
       msg: '=',
       type: '=',

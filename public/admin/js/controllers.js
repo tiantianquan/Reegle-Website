@@ -38,27 +38,36 @@ angular.module('admin.controllers', [])
 
   $scope.news = News.get({
       id: $stateParams.id
-    }, function(value) {
-    },
+    }, function(value) {},
     function(httpResponse) {})
 
   $scope.submit = function() {
-    console.log($scope.news)
-    $scope.news.$update(function() {
-      console.log($scope.news)
+    News.update({
+      id: $scope.news._id
+    }, $scope.news, function(data) {
+      // $scope.news = data
       $scope.alert = {
-        msg: '提交成功',
+        msg: '保存成功',
         type: 'success',
         isShow: true
       }
-    }, function() {})
+    }, function(res) {
+      $scope.alert = {
+        msg: '保存失败',
+        type: 'danger',
+        isShow: true
+      }
+    });
+
   }
 })
 
-.controller('NewsCreateCtrl', function($scope, $stateParams, News) {
+.controller('NewsCreateCtrl', function($scope, $stateParams,$state,News) {
   $scope.news = new News()
   $scope.submit = function() {
-    $scope.news.$save(function() {})
+    $scope.news.$save(function(data) {
+      $state.go('news.edit',{id:data._id})
+    })
   }
 })
 
