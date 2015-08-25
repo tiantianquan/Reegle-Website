@@ -60,12 +60,30 @@ angular.module('admin.controllers', [])
   $scope.serves = Serve.query()
 })
 
-.controller('ServeEditCtrl', function($scope, $stateParams, Serve, Upload, $timeout) {
+.controller('ServeEditCtrl', function($scope, $stateParams, Serve, Solution, Upload, $timeout) {
   $scope.serve = Serve.get({
     id: $stateParams.id
   })
 
+  $scope.solutions = Solution.query(function(items) {
+    $scope.serve.connectArticle.forEach(function(i) {
+      items.forEach(function(j) {
+        if (i === j._id) {
+          j.isChecked = true
+        } else {
+          j.isChecked = false
+        }
+      })
+    })
+  })
+
   $scope.submit = function() {
+    $scope.serve.connectArticle = []
+    $scope.solutions.forEach(function(item) {
+      if (item.isChecked) {
+        $scope.serve.connectArticle.push(item._id)
+      }
+    })
     $scope.serve.$update(function() {
       console.log('success')
     }, function() {
@@ -74,27 +92,44 @@ angular.module('admin.controllers', [])
   }
 })
 
-.controller('ServeCreateCtrl', function($scope, $stateParams, Serve) {
+.controller('ServeCreateCtrl', function($scope, Solution, $stateParams, Serve) {
   $scope.serve = new Serve()
+  $scope.solutions = Solution.query()
   $scope.submit = function() {
-    $scope.serve.$save(function() {
-
-    })
+    $scope.serve.$save(function() {})
   }
 })
 
 
 //solution
-.controller('SolutionCtrl', function($scope, Solution, $state) {
+.controller('SolutionCtrl', function($scope, Serve, Solution, $state) {
   $scope.solutions = Solution.query()
 })
 
-.controller('SolutionEditCtrl', function($scope, $stateParams, Solution, Upload, $timeout) {
+.controller('SolutionEditCtrl', function($scope, $stateParams, Solution, Serve, Upload, $timeout) {
   $scope.solution = Solution.get({
     id: $stateParams.id
   })
 
+  $scope.serves = Serve.query(function(items) {
+    $scope.solution.connectArticle.forEach(function(i) {
+      items.forEach(function(j) {
+        if (i === j._id) {
+          j.isChecked = true
+        } else {
+          j.isChecked = false
+        }
+      })
+    })
+  })
+
   $scope.submit = function() {
+    $scope.solution.connectArticle = []
+    $scope.serves.forEach(function(item) {
+      if (item.isChecked) {
+        $scope.solution.connectArticle.push(item._id)
+      }
+    })
     $scope.solution.$update(function() {
       console.log('success')
     }, function() {
@@ -103,8 +138,9 @@ angular.module('admin.controllers', [])
   }
 })
 
-.controller('SolutionCreateCtrl', function($scope, $stateParams, Solution) {
-  $scope.solution = new Serve()
+.controller('SolutionCreateCtrl', function($scope, Serve, $stateParams, Solution) {
+  $scope.solution = new Solution()
+  $scope.serves = Serve.query()
   $scope.submit = function() {
     $scope.solution.$save(function() {})
   }

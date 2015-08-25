@@ -1,31 +1,55 @@
 var models = require('../models')
 var Solution = models.Solution
-var express = require('express')
-var router = express.Router()
+var Serve = models.Serve
 
-router.get('/admin/solution', function(req, res, next) {
-  Solution.find().sort({_id:-1}).exec(function(err, docs) {
-    res.json(docs)
-  })
-})
+var solution = {
+  admin: {
+    getAll: function(req, res, next) {
+      Solution.find().sort({
+        _id: -1
+      }).exec(function(err, docs) {
+        res.json(docs)
+      })
+    },
+    getById: function(req, res, next) {
+      Solution.findById(req.params.id, function(err, doc) {
+        res.json(doc)
+      })
+    },
+    updateById: function(req, res, next) {
+      Solution.findByIdAndUpdate(req.params.id, req.body, function(err, doc) {
+        res.json(doc)
+      })
+    },
+    create: function(req, res, next) {
+      Solution.create(req.body, function(err, doc) {
+        res.json(doc)
+      })
+    },
+    deleteById:function(req,res,next){
+      Solution.findByIdAndRemove(req.params.id,function(err,doc){
+        res.json(doc)
+      })
+    }
+  },
+  common: {
+    getAll: function(req, res, next) {
+      Solution.find().sort({
+        _id: -1
+      }).exec(function(err,docs) {
+        res.render('solution', {
+          data: docs
+        })
+      })
+    },
+    getById: function(req, res, next) {
+      Solution.findById(req.params.id, function(err, doc) {
+        res.render('solution', {
+          data: doc
+        })
+      })
+    },
+  }
+}
 
-router.get('/admin/solution/:id', function(req, res, next) {
-  Solution.findById(req.params.id ,function(err, news) {
-    res.json(news)
-  })
-})
-
-router.put('/admin/Solution/:id', function(req, res, next) {
-  var data = req.body
-  Solution.findByIdAndUpdate(data._id,data,function(err, doc) {
-    res.json(doc)
-  })
-})
-
-router.post('/admin/solution', function(req, res, next) {
-  Solution.create(req.body,function(err,doc){
-    res.json(doc)
-  })
-})
-
-module.exports = router
+module.exports = solution
