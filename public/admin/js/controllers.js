@@ -81,6 +81,10 @@ angular.module('admin.controllers', [])
 .controller('ServeEditCtrl', function($scope, $stateParams, Serve, Solution, Upload, $timeout) {
   $scope.serve = Serve.get({
     id: $stateParams.id
+  },function(serve){
+    $scope.solutionList = serve.connectArticle.map(function(ca){
+      return Solution.get({id:ca})
+    })
   })
 
   $scope.solutions = Solution.query(function(items) {
